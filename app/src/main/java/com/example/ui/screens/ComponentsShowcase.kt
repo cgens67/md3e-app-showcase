@@ -20,6 +20,10 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
+import androidx.compose.material3.carousel.HorizontalMultiBrowseCarousel
+import androidx.compose.material3.carousel.HorizontalUncontainedCarousel
+import androidx.compose.material3.carousel.rememberCarouselState
+import androidx.compose.material3.carousel.CarouselState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -87,81 +91,6 @@ fun ComponentsShowcase(modifier: Modifier = Modifier) {
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
-        // Featured Adaptive Carousel Banner precisely matching Geometric Balance HTML spec
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer
-            ),
-            shape = RoundedCornerShape(28.dp)
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(180.dp)
-            ) {
-                // Background decorative ambient abstract shape
-                Box(
-                    modifier = Modifier
-                        .size(130.dp)
-                        .align(Alignment.BottomEnd)
-                        .offset(x = 10.dp, y = 20.dp)
-                        .background(
-                            color = Color(0xFFD0BCFF).copy(alpha = 0.5f),
-                            shape = CircleShape
-                        )
-                )
-
-                // Content Column
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(24.dp),
-                    verticalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Column {
-                        Text(
-                            text = "FEATURED",
-                            style = MaterialTheme.typography.labelSmall,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f),
-                            letterSpacing = 1.sp
-                        )
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Text(
-                            text = "Adaptive\nCarousel",
-                            style = MaterialTheme.typography.titleLarge,
-                            fontSize = 28.sp,
-                            lineHeight = 32.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer
-                        )
-                    }
-
-                     Button(
-                        onClick = {
-                            selectedCategory = "Containers & Visuals"
-                        },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                            contentColor = MaterialTheme.colorScheme.primaryContainer
-                        ),
-                        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
-                        shape = RoundedCornerShape(50)
-                    ) {
-                        Text(
-                            text = "View Docs",
-                            color = MaterialTheme.colorScheme.primaryContainer,
-                            style = MaterialTheme.typography.labelLarge,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                }
-            }
-        }
-
         // Horizontal scrolling category bar
         LazyRow(
             modifier = Modifier
@@ -211,6 +140,83 @@ fun ComponentsShowcase(modifier: Modifier = Modifier) {
             contentPadding = PaddingValues(top = 8.dp, bottom = 48.dp, start = 16.dp, end = 16.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
+            item {
+                // Featured Adaptive Carousel Banner precisely matching Geometric Balance HTML spec
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 8.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer
+                    ),
+                    shape = RoundedCornerShape(28.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(180.dp)
+                    ) {
+                        // Background decorative ambient abstract shape
+                        Box(
+                            modifier = Modifier
+                                .size(130.dp)
+                                .align(Alignment.BottomEnd)
+                                .offset(x = 10.dp, y = 20.dp)
+                                .background(
+                                    color = Color(0xFFD0BCFF).copy(alpha = 0.5f),
+                                    shape = CircleShape
+                                )
+                        )
+
+                        // Content Column
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(24.dp),
+                            verticalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column {
+                                Text(
+                                    text = "FEATURED",
+                                    style = MaterialTheme.typography.labelSmall,
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f),
+                                    letterSpacing = 1.sp
+                                )
+                                Spacer(modifier = Modifier.height(4.dp))
+                                Text(
+                                    text = "Adaptive\nCarousel",
+                                    style = MaterialTheme.typography.titleLarge,
+                                    fontSize = 28.sp,
+                                    lineHeight = 32.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                                )
+                            }
+
+                             Button(
+                                onClick = {
+                                    selectedCategory = "Containers & Visuals"
+                                },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                                    contentColor = MaterialTheme.colorScheme.primaryContainer
+                                ),
+                                contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
+                                shape = RoundedCornerShape(50)
+                            ) {
+                                Text(
+                                    text = "View Docs",
+                                    color = MaterialTheme.colorScheme.primaryContainer,
+                                    style = MaterialTheme.typography.labelLarge,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+
             items(filteredComponents) { doc ->
                 OutlinedCard(
                     modifier = Modifier
@@ -1319,24 +1325,26 @@ fun RenderInteractiveDemo(
                         )
                     }
                     Text(
-                        text = "The last item in the view is partially clipped at the container edge to establish scroll affordance.",
+                        text = "The last item in the view is dynamically clipped/shrunk at the container edge to establish optimal scroll affordance.",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     
+                    val multiBrowseState = rememberCarouselState { slides.size }
                     HorizontalMultiBrowseCarousel(
-                        state = rememberCarouselState { slides.size },
-                        preferredItemWidth = 145.dp, // Sized perfectly so the trailing card is clipped!
+                        state = multiBrowseState,
+                        preferredItemWidth = 186.dp,
                         itemSpacing = 8.dp,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(160.dp)
+                            .height(180.dp)
                     ) { index ->
                         val slide = slides[index]
                         Box(
                             modifier = Modifier
-                                .fillMaxHeight()
-                                .background(slide.third, RoundedCornerShape(16.dp))
+                                .fillMaxSize()
+                                .clip(RoundedCornerShape(16.dp))
+                                .background(slide.third)
                                 .border(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f), RoundedCornerShape(16.dp))
                                 .padding(12.dp)
                         ) {
@@ -1375,24 +1383,26 @@ fun RenderInteractiveDemo(
                         )
                     }
                     Text(
-                        text = "Shows the active item fully size-aligned. The last item is not clipped when resting, creating a clean rectangular look.",
+                        text = "Shows the active items fully size-aligned. The last item is not clipped when resting, creating a clean aligned layout.",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
 
-                    HorizontalMultiBrowseCarousel(
-                        state = rememberCarouselState { slides.size },
-                        preferredItemWidth = 265.dp, // Sized so that each slide takes up full available width and doesn't partially clip other slides!
+                    val uncontainedState = rememberCarouselState { slides.size }
+                    HorizontalUncontainedCarousel(
+                        state = uncontainedState,
+                        itemWidth = 265.dp,
                         itemSpacing = 8.dp,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(160.dp)
+                            .height(180.dp)
                     ) { index ->
                         val slide = slides[index]
                         Box(
                             modifier = Modifier
-                                .fillMaxHeight()
-                                .background(slide.third, RoundedCornerShape(16.dp))
+                                .fillMaxSize()
+                                .clip(RoundedCornerShape(16.dp))
+                                .background(slide.third)
                                 .border(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f), RoundedCornerShape(16.dp))
                                 .padding(12.dp)
                         ) {
@@ -1457,34 +1467,4 @@ fun AppBarRow(
             content = actions
         )
     }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun HorizontalMultiBrowseCarousel(
-    state: CarouselState,
-    preferredItemWidth: androidx.compose.ui.unit.Dp,
-    itemSpacing: androidx.compose.ui.unit.Dp,
-    modifier: Modifier = Modifier,
-    content: @Composable (Int) -> Unit
-) {
-    LazyRow(
-        modifier = modifier.height(200.dp),
-        horizontalArrangement = Arrangement.spacedBy(itemSpacing),
-        contentPadding = PaddingValues(horizontal = 12.dp)
-    ) {
-        items(state.itemsCount) { index ->
-            Box(modifier = Modifier.width(preferredItemWidth)) {
-                content(index)
-            }
-        }
-    }
-}
-
-class CarouselState(val itemsCount: Int)
-
-@Composable
-fun rememberCarouselState(itemsCount: () -> Int): CarouselState {
-    val count = remember { itemsCount() }
-    return remember { CarouselState(count) }
 }
