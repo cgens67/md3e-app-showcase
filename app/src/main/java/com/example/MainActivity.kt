@@ -113,7 +113,7 @@ fun MainAppFrame(
                 HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f), thickness = 1.dp)
                 NavigationBar(
                     containerColor = MaterialTheme.colorScheme.surfaceVariant,
-                    modifier = Modifier.height(64.dp),
+                    modifier = Modifier.height(80.dp),
                     windowInsets = WindowInsets(0, 0, 0, 0)
                 ) {
                     NavigationBarItem(

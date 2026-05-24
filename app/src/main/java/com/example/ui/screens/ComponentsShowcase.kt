@@ -140,7 +140,7 @@ fun ComponentsShowcase(modifier: Modifier = Modifier) {
                         )
                     }
 
-                    Button(
+                     Button(
                         onClick = {
                             selectedCategory = "Containers & Visuals"
                         },
@@ -151,7 +151,12 @@ fun ComponentsShowcase(modifier: Modifier = Modifier) {
                         contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
                         shape = RoundedCornerShape(50)
                     ) {
-                        Text("View Docs", style = MaterialTheme.typography.labelLarge)
+                        Text(
+                            text = "View Docs",
+                            color = MaterialTheme.colorScheme.primaryContainer,
+                            style = MaterialTheme.typography.labelLarge,
+                            fontWeight = FontWeight.Bold
+                        )
                     }
                 }
             }
@@ -1284,28 +1289,121 @@ fun RenderInteractiveDemo(
             val slides = listOf(
                 Triple("Creative Idea Flow", "Launch innovative project designs with wavy templates.", MaterialTheme.colorScheme.primaryContainer),
                 Triple("Spring Velocity Animation", "Build super-responsive components using spring curves.", MaterialTheme.colorScheme.secondaryContainer),
-                Triple("Responsive Layout Grid", "Ensure precise visual scales from compact to tablets.", MaterialTheme.colorScheme.tertiaryContainer)
+                Triple("Responsive Layout Grid", "Ensure precise visual scales from compact to tablets.", MaterialTheme.colorScheme.tertiaryContainer),
+                Triple("Adaptive Space Map", "Seamlessly reflow charts and lists dynamically.", MaterialTheme.colorScheme.primaryContainer),
+                Triple("Precision Timing Matrix", "Measure fluid states in microscopic latency frames.", MaterialTheme.colorScheme.secondaryContainer)
             )
 
-            HorizontalMultiBrowseCarousel(
-                state = rememberCarouselState { slides.size },
-                preferredItemWidth = 190.dp,
-                itemSpacing = 8.dp,
-                modifier = Modifier.fillMaxWidth()
-            ) { index ->
-                val slide = slides[index]
-                Box(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .background(slide.third, RoundedCornerShape(16.dp))
-                        .padding(16.dp)
-                ) {
-                    Column(verticalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxSize()) {
-                        Icon(Icons.Default.Star, null, modifier = Modifier.size(24.dp), tint = MaterialTheme.colorScheme.primary)
-                        Column {
-                            Text(slide.first, fontWeight = FontWeight.ExtraBold, style = MaterialTheme.typography.titleSmall)
-                            Spacer(modifier = Modifier.height(2.dp))
-                            Text(slide.second, style = MaterialTheme.typography.bodySmall, fontSize = 11.sp, maxLines = 2)
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                // Style 1: Multi-Browse Carousel (Clipped)
+                Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(4.dp))
+                                .padding(horizontal = 6.dp, vertical = 2.dp)
+                        ) {
+                            Text("M3 Style", color = MaterialTheme.colorScheme.onPrimary, fontSize = 9.sp, fontWeight = FontWeight.Bold)
+                        }
+                        Text(
+                            text = "Multi-Browse Carousel",
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                    Text(
+                        text = "The last item in the view is partially clipped at the container edge to establish scroll affordance.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    
+                    HorizontalMultiBrowseCarousel(
+                        state = rememberCarouselState { slides.size },
+                        preferredItemWidth = 145.dp, // Sized perfectly so the trailing card is clipped!
+                        itemSpacing = 8.dp,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(160.dp)
+                    ) { index ->
+                        val slide = slides[index]
+                        Box(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .background(slide.third, RoundedCornerShape(16.dp))
+                                .border(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f), RoundedCornerShape(16.dp))
+                                .padding(12.dp)
+                        ) {
+                            Column(verticalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxSize()) {
+                                Icon(Icons.Default.Star, null, modifier = Modifier.size(18.dp), tint = MaterialTheme.colorScheme.primary)
+                                Column {
+                                    Text(slide.first, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.labelLarge, maxLines = 1, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis)
+                                    Spacer(modifier = Modifier.height(2.dp))
+                                    Text(slide.second, style = MaterialTheme.typography.bodySmall, fontSize = 10.sp, maxLines = 2, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis)
+                                }
+                            }
+                        }
+                    }
+                }
+
+                HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f), thickness = 1.dp)
+
+                // Style 2: Uncontained Carousel (Unclipped)
+                Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .background(MaterialTheme.colorScheme.secondary, RoundedCornerShape(4.dp))
+                                .padding(horizontal = 6.dp, vertical = 2.dp)
+                        ) {
+                            Text("Unclipped", color = MaterialTheme.colorScheme.onSecondary, fontSize = 9.sp, fontWeight = FontWeight.Bold)
+                        }
+                        Text(
+                            text = "Uncontained Carousel",
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                    Text(
+                        text = "Shows the active item fully size-aligned. The last item is not clipped when resting, creating a clean rectangular look.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+
+                    HorizontalMultiBrowseCarousel(
+                        state = rememberCarouselState { slides.size },
+                        preferredItemWidth = 265.dp, // Sized so that each slide takes up full available width and doesn't partially clip other slides!
+                        itemSpacing = 8.dp,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(160.dp)
+                    ) { index ->
+                        val slide = slides[index]
+                        Box(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .background(slide.third, RoundedCornerShape(16.dp))
+                                .border(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f), RoundedCornerShape(16.dp))
+                                .padding(12.dp)
+                        ) {
+                            Column(verticalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxSize()) {
+                                Icon(Icons.Default.Favorite, null, modifier = Modifier.size(18.dp), tint = MaterialTheme.colorScheme.secondary)
+                                Column {
+                                    Text(slide.first, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.labelLarge, maxLines = 1, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis)
+                                    Spacer(modifier = Modifier.height(2.dp))
+                                    Text(slide.second, style = MaterialTheme.typography.bodySmall, fontSize = 10.sp, maxLines = 2, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis)
+                                }
+                            }
                         }
                     }
                 }

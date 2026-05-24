@@ -71,7 +71,13 @@ fun AdaptiveSandbox(modifier: Modifier = Modifier) {
                 selected = deviceMode == "Compact",
                 onClick = { deviceMode = "Compact" },
                 shape = SegmentedButtonDefaults.itemShape(index = 0, count = 3),
-                modifier = Modifier.testTag("device_compact_btn")
+                modifier = Modifier.testTag("device_compact_btn"),
+                colors = SegmentedButtonDefaults.colors(
+                    activeContainerColor = MaterialTheme.colorScheme.primary,
+                    activeContentColor = MaterialTheme.colorScheme.onPrimary,
+                    inactiveContainerColor = MaterialTheme.colorScheme.surface,
+                    inactiveContentColor = MaterialTheme.colorScheme.onSurface
+                )
             ) {
                 Text("Compact")
             }
@@ -79,7 +85,13 @@ fun AdaptiveSandbox(modifier: Modifier = Modifier) {
                 selected = deviceMode == "Medium",
                 onClick = { deviceMode = "Medium" },
                 shape = SegmentedButtonDefaults.itemShape(index = 1, count = 3),
-                modifier = Modifier.testTag("device_medium_btn")
+                modifier = Modifier.testTag("device_medium_btn"),
+                colors = SegmentedButtonDefaults.colors(
+                    activeContainerColor = MaterialTheme.colorScheme.primary,
+                    activeContentColor = MaterialTheme.colorScheme.onPrimary,
+                    inactiveContainerColor = MaterialTheme.colorScheme.surface,
+                    inactiveContentColor = MaterialTheme.colorScheme.onSurface
+                )
             ) {
                 Text("Medium")
             }
@@ -87,7 +99,13 @@ fun AdaptiveSandbox(modifier: Modifier = Modifier) {
                 selected = deviceMode == "Expanded",
                 onClick = { deviceMode = "Expanded" },
                 shape = SegmentedButtonDefaults.itemShape(index = 2, count = 3),
-                modifier = Modifier.testTag("device_expanded_btn")
+                modifier = Modifier.testTag("device_expanded_btn"),
+                colors = SegmentedButtonDefaults.colors(
+                    activeContainerColor = MaterialTheme.colorScheme.primary,
+                    activeContentColor = MaterialTheme.colorScheme.onPrimary,
+                    inactiveContainerColor = MaterialTheme.colorScheme.surface,
+                    inactiveContentColor = MaterialTheme.colorScheme.onSurface
+                )
             ) {
                 Text("Expanded")
             }
@@ -173,25 +191,28 @@ fun RenderDeviceMockContent(mode: String) {
                 bottomBar = {
                     NavigationBar(
                         containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp),
-                        modifier = Modifier.height(56.dp)
+                        modifier = Modifier.height(64.dp)
                     ) {
                         NavigationBarItem(
                             selected = true,
                             onClick = {},
-                            icon = { Icon(Icons.Default.Home, null) },
-                            label = { Text("Feed", fontSize = 10.sp) }
+                            icon = { Icon(Icons.Default.Home, null, modifier = Modifier.size(20.dp)) },
+                            label = { Text("Feed", fontSize = 9.sp) },
+                            alwaysShowLabel = true
                         )
                         NavigationBarItem(
                             selected = false,
                             onClick = {},
-                            icon = { Icon(Icons.Default.MailOutline, null) },
-                            label = { Text("Inbound", fontSize = 10.sp) }
+                            icon = { Icon(Icons.Default.MailOutline, null, modifier = Modifier.size(20.dp)) },
+                            label = { Text("Inbound", fontSize = 9.sp) },
+                            alwaysShowLabel = true
                         )
                         NavigationBarItem(
                             selected = false,
                             onClick = {},
-                            icon = { Icon(Icons.Default.PersonOutline, null) },
-                            label = { Text("Profile", fontSize = 10.sp) }
+                            icon = { Icon(Icons.Default.PersonOutline, null, modifier = Modifier.size(20.dp)) },
+                            label = { Text("Profile", fontSize = 9.sp) },
+                            alwaysShowLabel = true
                         )
                     }
                 },
