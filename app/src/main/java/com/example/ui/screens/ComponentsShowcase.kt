@@ -138,77 +138,79 @@ fun ComponentsShowcase(modifier: Modifier = Modifier) {
             contentPadding = PaddingValues(top = 8.dp, bottom = 48.dp, start = 16.dp, end = 16.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
-            item {
-                // Featured Adaptive Carousel Banner precisely matching Geometric Balance HTML spec (now inside list to prevent obstructing sightlines!)
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 8.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer
-                    ),
-                    shape = RoundedCornerShape(28.dp)
-                ) {
-                    Box(
+            if (selectedCategory == "Containers & Visuals") {
+                item {
+                    // Featured Adaptive Carousel Banner precisely matching Geometric Balance HTML spec (now inside list to prevent obstructing sightlines!)
+                    Card(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(180.dp)
+                            .padding(bottom = 8.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.primaryContainer
+                        ),
+                        shape = RoundedCornerShape(28.dp)
                     ) {
-                        // Background decorative ambient abstract shape
                         Box(
                             modifier = Modifier
-                                .size(130.dp)
-                                .align(Alignment.BottomEnd)
-                                .offset(x = 10.dp, y = 20.dp)
-                                .background(
-                                    color = Color(0xFFD0BCFF).copy(alpha = 0.5f),
-                                    shape = CircleShape
-                                )
-                        )
-
-                        // Content Column
-                        Column(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(24.dp),
-                            verticalArrangement = Arrangement.SpaceBetween
+                                .fillMaxWidth()
+                                .height(180.dp)
                         ) {
-                            Column {
-                                Text(
-                                    text = "FEATURED",
-                                    style = MaterialTheme.typography.labelSmall,
-                                    fontWeight = FontWeight.Bold,
-                                    color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f),
-                                    letterSpacing = 1.sp
-                                )
-                                Spacer(modifier = Modifier.height(4.dp))
-                                Text(
-                                    text = "Adaptive\nCarousel",
-                                    style = MaterialTheme.typography.titleLarge,
-                                    fontSize = 28.sp,
-                                    lineHeight = 32.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    color = MaterialTheme.colorScheme.onPrimaryContainer
-                                )
-                            }
+                            // Background decorative ambient abstract shape
+                            Box(
+                                modifier = Modifier
+                                    .size(130.dp)
+                                    .align(Alignment.BottomEnd)
+                                    .offset(x = 10.dp, y = 20.dp)
+                                    .background(
+                                        color = Color(0xFFD0BCFF).copy(alpha = 0.5f),
+                                        shape = CircleShape
+                                    )
+                            )
 
-                             Button(
-                                onClick = {
-                                    selectedCategory = "Containers & Visuals"
-                                },
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                                    contentColor = MaterialTheme.colorScheme.primaryContainer
-                                ),
-                                contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
-                                shape = RoundedCornerShape(50)
+                            // Content Column
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(24.dp),
+                                verticalArrangement = Arrangement.SpaceBetween
                             ) {
-                                Text(
-                                    text = "View Docs",
-                                    color = MaterialTheme.colorScheme.primaryContainer,
-                                    style = MaterialTheme.typography.labelLarge,
-                                    fontWeight = FontWeight.Bold
-                                )
+                                Column {
+                                    Text(
+                                        text = "FEATURED",
+                                        style = MaterialTheme.typography.labelSmall,
+                                        fontWeight = FontWeight.Bold,
+                                        color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f),
+                                        letterSpacing = 1.sp
+                                    )
+                                    Spacer(modifier = Modifier.height(4.dp))
+                                    Text(
+                                        text = "Adaptive\nCarousel",
+                                        style = MaterialTheme.typography.titleLarge,
+                                        fontSize = 28.sp,
+                                        lineHeight = 32.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                                    )
+                                }
+
+                                 Button(
+                                    onClick = {
+                                        selectedCategory = "Containers & Visuals"
+                                    },
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                                        contentColor = MaterialTheme.colorScheme.primaryContainer
+                                    ),
+                                    contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
+                                    shape = RoundedCornerShape(50)
+                                ) {
+                                    Text(
+                                        text = "View Docs",
+                                        color = MaterialTheme.colorScheme.primaryContainer,
+                                        style = MaterialTheme.typography.labelLarge,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
                             }
                         }
                     }
@@ -1290,14 +1292,25 @@ fun RenderInteractiveDemo(
 
         "Carousel" -> {
             val slides = listOf(
-                Triple("Pod wiatr", "W.E.N.A. & Quiz", "https://images.unsplash.com/photo-1516280440614-37939bbacd6a?w=500&auto=format&fit=crop&q=80"),
-                Triple("Dil Lagana Mana Tha", "Krish Mondal, De...", "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=500&auto=format&fit=crop&q=80"),
-                Triple("Cruel Summer", "Taylor Swift", "https://images.unsplash.com/photo-1524250502761-136f2f3f34f5?w=500&auto=format&fit=crop&q=80"),
-                Triple("SOS (Night Bass Remix)", "FIFTY FIFTY", "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500&auto=format&fit=crop&q=80"),
-                Triple("打工仔", "Steady Gang", "https://images.unsplash.com/photo-1549417229-aa67d3263c09?w=500&auto=format&fit=crop&q=80"),
-                Triple("YALA (Ultra Slowed)", "QMIIR, Irokz, DJ Zarek", "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=500&auto=format&fit=crop&q=80"),
-                Triple("You Rock My World", "Michael Jackson", "https://images.unsplash.com/photo-1487180142328-054b783fc471?w=500&auto=format&fit=crop&q=80"),
-                Triple("Chicago", "Michael Jackson", "https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=500&auto=format&fit=crop&q=80")
+                Triple("Track 01", "Ambient Exploration", Pair(Color(0xFF6200EE), Color(0xFFBB86FC))),
+                Triple("Track 02", "Acoustic Session", Pair(Color(0xFF03DAC6), Color(0xFF018786))),
+                Triple("Track 03", "Cinematic Beats", Pair(Color(0xFFFF5722), Color(0xFFFF9800))),
+                Triple("Track 04", "Midnight Chill", Pair(Color(0xFFE91E63), Color(0xFF9C27B0))),
+                Triple("Track 05", "Synthwave Waves", Pair(Color(0xFF3F51B5), Color(0xFF2196F3))),
+                Triple("Track 06", "Morning Acoustic", Pair(Color(0xFF4CAF50), Color(0xFF8BC34A))),
+                Triple("Track 07", "Techno Pulsar", Pair(Color(0xFF9C27B0), Color(0xFF673AB7))),
+                Triple("Track 08", "Oceanic Breeze", Pair(Color(0xFF009688), Color(0xFF4CAF50)))
+            )
+
+            val icons = listOf(
+                Icons.Default.MusicNote,
+                Icons.Default.Album,
+                Icons.Default.Headphones,
+                Icons.Default.Favorite,
+                Icons.Default.LibraryMusic,
+                Icons.Default.QueueMusic,
+                Icons.Default.Radio,
+                Icons.Default.GraphicEq
             )
 
             Column(
@@ -1345,13 +1358,26 @@ fun RenderInteractiveDemo(
                                 .clip(RoundedCornerShape(24.dp))
                                 .border(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.25f), RoundedCornerShape(24.dp))
                         ) {
-                            // Immersive Background Album Cover
-                            AsyncImage(
-                                model = slide.third,
-                                contentDescription = slide.first,
-                                contentScale = ContentScale.Crop,
-                                modifier = Modifier.fillMaxSize()
-                            )
+                            // Immersive Background Premium Gradient
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(
+                                        Brush.verticalGradient(
+                                            colors = listOf(slide.third.first, slide.third.second)
+                                        )
+                                    )
+                            ) {
+                                // Centered beautiful modern vector icon
+                                Icon(
+                                    imageVector = icons[index % icons.size],
+                                    contentDescription = slide.first,
+                                    tint = Color.White.copy(alpha = 0.55f),
+                                    modifier = Modifier
+                                        .size(64.dp)
+                                        .align(Alignment.Center)
+                                )
+                            }
                             
                             // High-contrast smooth gradient scrim
                             Box(
@@ -1361,8 +1387,8 @@ fun RenderInteractiveDemo(
                                         Brush.verticalGradient(
                                             colors = listOf(
                                                 Color.Transparent,
-                                                Color.Black.copy(alpha = 0.3f),
-                                                Color.Black.copy(alpha = 0.85f)
+                                                Color.Black.copy(alpha = 0.2f),
+                                                Color.Black.copy(alpha = 0.75f)
                                             )
                                         )
                                     )
@@ -1385,7 +1411,7 @@ fun RenderInteractiveDemo(
                                 Spacer(modifier = Modifier.height(2.dp))
                                 Text(
                                     text = slide.second,
-                                    color = Color.White.copy(alpha = 0.7f),
+                                    color = Color.White.copy(alpha = 0.75f),
                                     style = MaterialTheme.typography.bodySmall,
                                     fontWeight = FontWeight.Medium,
                                     maxLines = 1,
@@ -1439,13 +1465,26 @@ fun RenderInteractiveDemo(
                                 .clip(RoundedCornerShape(24.dp))
                                 .border(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.25f), RoundedCornerShape(24.dp))
                         ) {
-                            // Immersive Background Album Cover
-                            AsyncImage(
-                                model = slide.third,
-                                contentDescription = slide.first,
-                                contentScale = ContentScale.Crop,
-                                modifier = Modifier.fillMaxSize()
-                            )
+                            // Immersive Background Premium Gradient
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(
+                                        Brush.verticalGradient(
+                                            colors = listOf(slide.third.first, slide.third.second)
+                                        )
+                                    )
+                            ) {
+                                // Centered beautiful modern vector icon
+                                Icon(
+                                    imageVector = icons[index % icons.size],
+                                    contentDescription = slide.first,
+                                    tint = Color.White.copy(alpha = 0.55f),
+                                    modifier = Modifier
+                                        .size(72.dp)
+                                        .align(Alignment.Center)
+                                )
+                            }
                             
                             // High-contrast smooth gradient scrim
                             Box(
@@ -1455,8 +1494,8 @@ fun RenderInteractiveDemo(
                                         Brush.verticalGradient(
                                             colors = listOf(
                                                 Color.Transparent,
-                                                Color.Black.copy(alpha = 0.3f),
-                                                Color.Black.copy(alpha = 0.85f)
+                                                Color.Black.copy(alpha = 0.2f),
+                                                Color.Black.copy(alpha = 0.75f)
                                             )
                                         )
                                     )
@@ -1479,7 +1518,7 @@ fun RenderInteractiveDemo(
                                 Spacer(modifier = Modifier.height(2.dp))
                                 Text(
                                     text = slide.second,
-                                    color = Color.White.copy(alpha = 0.72f),
+                                    color = Color.White.copy(alpha = 0.75f),
                                     style = MaterialTheme.typography.bodyMedium,
                                     fontWeight = FontWeight.Medium,
                                     maxLines = 1,
