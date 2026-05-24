@@ -1,0 +1,6 @@
+{
+  "name": "MD3 Expressive",
+  "description": "Interactive showcase and documentation of Material Design 3 Expressive components, animations, and adaptive layouts built in Jetpack Compose.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
