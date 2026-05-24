@@ -20,6 +20,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
+import androidx.compose.material3.carousel.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -1343,10 +1344,11 @@ fun RenderInteractiveDemo(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     
-                    ShowcaseCarousel(
-                        itemsCount = slides.size,
-                        preferredItemWidth = 175.dp, // Sized perfectly so the trailing card is clipped!
-                        itemSpacing = 12.dp,
+                    val carouselState1 = rememberCarouselState { slides.size }
+                    HorizontalMultiBrowseCarousel(
+                        state = carouselState1,
+                        preferredItemWidth = 186.dp,
+                        itemSpacing = 8.dp,
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(210.dp)
@@ -1355,7 +1357,7 @@ fun RenderInteractiveDemo(
                         Box(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .clip(RoundedCornerShape(24.dp))
+                                .maskClip(RoundedCornerShape(24.dp))
                                 .border(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.25f), RoundedCornerShape(24.dp))
                         ) {
                             // Immersive Background Premium Gradient
@@ -1450,10 +1452,11 @@ fun RenderInteractiveDemo(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
 
-                    ShowcaseCarousel(
-                        itemsCount = slides.size,
-                        preferredItemWidth = 310.dp, // Wide card layout, unclipped
-                        itemSpacing = 12.dp,
+                    val carouselState2 = rememberCarouselState { slides.size }
+                    HorizontalUncontainedCarousel(
+                        state = carouselState2,
+                        itemWidth = 310.dp,
+                        itemSpacing = 8.dp,
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(210.dp)
@@ -1462,7 +1465,7 @@ fun RenderInteractiveDemo(
                         Box(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .clip(RoundedCornerShape(24.dp))
+                                .maskClip(RoundedCornerShape(24.dp))
                                 .border(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.25f), RoundedCornerShape(24.dp))
                         ) {
                             // Immersive Background Premium Gradient
@@ -1580,27 +1583,4 @@ fun AppBarRow(
     }
 }
 
-@Composable
-fun ShowcaseCarousel(
-    itemsCount: Int,
-    preferredItemWidth: androidx.compose.ui.unit.Dp,
-    itemSpacing: androidx.compose.ui.unit.Dp,
-    modifier: Modifier = Modifier,
-    content: @Composable (Int) -> Unit
-) {
-    LazyRow(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(itemSpacing),
-        contentPadding = PaddingValues(horizontal = 24.dp)
-    ) {
-        items(itemsCount) { index ->
-            Box(
-                modifier = Modifier
-                    .width(preferredItemWidth)
-                    .fillMaxHeight()
-            ) {
-                content(index)
-            }
-        }
-    }
-}
+
