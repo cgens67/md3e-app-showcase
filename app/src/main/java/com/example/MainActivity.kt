@@ -8,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -32,8 +33,15 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            MyApplicationTheme {
-                MainAppFrame()
+            val systemDark = isSystemInDarkTheme()
+            val isDarkThemeState = remember { mutableStateOf(systemDark) }
+            val isDarkTheme = isDarkThemeState.value
+
+            MyApplicationTheme(darkTheme = isDarkTheme) {
+                MainAppFrame(
+                    isDarkTheme = isDarkTheme,
+                    onThemeToggle = { isDarkThemeState.value = !isDarkThemeState.value }
+                )
             }
         }
     }
@@ -41,7 +49,10 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainAppFrame() {
+fun MainAppFrame(
+    isDarkTheme: Boolean,
+    onThemeToggle: () -> Unit
+) {
     var activeTab by remember { mutableStateOf("Showcase") } // Options: Showcase, Adaptive
     var showBlueprintInfo by remember { mutableStateOf(false) }
     val context = LocalContext.current
@@ -68,6 +79,16 @@ fun MainAppFrame() {
                 },
                 actions = {
                     IconButton(
+                        onClick = onThemeToggle,
+                        modifier = Modifier.testTag("theme_toggle_btn")
+                    ) {
+                        Icon(
+                            imageVector = if (isDarkTheme) Icons.Default.LightMode else Icons.Default.DarkMode,
+                            contentDescription = "Toggle Theme Mode",
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                    IconButton(
                         onClick = { showBlueprintInfo = true },
                         modifier = Modifier.testTag("app_info_trigger")
                     ) {
@@ -84,11 +105,16 @@ fun MainAppFrame() {
             )
         },
         bottomBar = {
-            Column {
+            Column(
+                modifier = Modifier
+                    .background(MaterialTheme.colorScheme.surfaceVariant)
+                    .navigationBarsPadding()
+            ) {
                 HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f), thickness = 1.dp)
                 NavigationBar(
                     containerColor = MaterialTheme.colorScheme.surfaceVariant,
-                    modifier = Modifier.height(64.dp)
+                    modifier = Modifier.height(64.dp),
+                    windowInsets = WindowInsets(0, 0, 0, 0)
                 ) {
                     NavigationBarItem(
                         selected = activeTab == "Showcase",

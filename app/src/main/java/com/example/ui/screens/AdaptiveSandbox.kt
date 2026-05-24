@@ -73,8 +73,6 @@ fun AdaptiveSandbox(modifier: Modifier = Modifier) {
                 shape = SegmentedButtonDefaults.itemShape(index = 0, count = 3),
                 modifier = Modifier.testTag("device_compact_btn")
             ) {
-                Icon(Icons.Default.PhoneAndroid, "Mobile", modifier = Modifier.size(16.dp))
-                Spacer(modifier = Modifier.width(4.dp))
                 Text("Compact")
             }
             SegmentedButton(
@@ -83,8 +81,6 @@ fun AdaptiveSandbox(modifier: Modifier = Modifier) {
                 shape = SegmentedButtonDefaults.itemShape(index = 1, count = 3),
                 modifier = Modifier.testTag("device_medium_btn")
             ) {
-                Icon(Icons.Default.TabletAndroid, "Foldable", modifier = Modifier.size(16.dp))
-                Spacer(modifier = Modifier.width(4.dp))
                 Text("Medium")
             }
             SegmentedButton(
@@ -93,8 +89,6 @@ fun AdaptiveSandbox(modifier: Modifier = Modifier) {
                 shape = SegmentedButtonDefaults.itemShape(index = 2, count = 3),
                 modifier = Modifier.testTag("device_expanded_btn")
             ) {
-                Icon(Icons.Default.DesktopMac, "Desktop", modifier = Modifier.size(16.dp))
-                Spacer(modifier = Modifier.width(4.dp))
                 Text("Expanded")
             }
         }
@@ -319,7 +313,7 @@ fun RenderDeviceMockContent(mode: String) {
                 // Simulated Small Navigation Drawer
                 Column(
                     modifier = Modifier
-                        .width(140.dp)
+                        .width(85.dp)
                         .fillMaxHeight()
                         .background(MaterialTheme.colorScheme.surfaceColorAtElevation(1.dp))
                         .border(
@@ -327,51 +321,102 @@ fun RenderDeviceMockContent(mode: String) {
                             color = MaterialTheme.colorScheme.outlineVariant,
                             shape = RoundedCornerShape(topEnd = 8.dp, bottomEnd = 8.dp)
                         )
-                        .padding(8.dp)
+                        .padding(6.dp)
                 ) {
-                    Text("Workspace", style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(vertical = 4.dp))
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Row(modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f), RoundedCornerShape(6.dp)).padding(6.dp), verticalAlignment = Alignment.CenterVertically) {
-                        Icon(Icons.Default.Home, null, modifier = Modifier.size(16.dp), tint = MaterialTheme.colorScheme.primary)
-                        Spacer(modifier = Modifier.width(6.dp))
-                        Text("Office", fontSize = 10.sp, fontWeight = FontWeight.Bold)
+                    Text(
+                        text = "Workspace",
+                        style = MaterialTheme.typography.labelSmall,
+                        fontSize = 8.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.padding(vertical = 2.dp)
+                    )
+                    Spacer(modifier = Modifier.height(6.dp))
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f), RoundedCornerShape(6.dp))
+                            .padding(4.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(Icons.Default.Home, null, modifier = Modifier.size(12.dp), tint = MaterialTheme.colorScheme.primary)
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text("Office", fontSize = 9.sp, fontWeight = FontWeight.Bold, maxLines = 1)
                     }
                     Spacer(modifier = Modifier.height(4.dp))
-                    Row(modifier = Modifier.fillMaxWidth().padding(6.dp), verticalAlignment = Alignment.CenterVertically) {
-                        Icon(Icons.Default.Inbox, null, modifier = Modifier.size(16.dp))
-                        Spacer(modifier = Modifier.width(6.dp))
-                        Text("Mail", fontSize = 10.sp)
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(4.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(Icons.Default.Inbox, null, modifier = Modifier.size(12.dp))
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text("Mail", fontSize = 9.sp, maxLines = 1)
                     }
                 }
 
-                // Tablet screen body: Triple grid structure!
+                // Tablet screen body: Double grid structure for elegant simulator preview!
                 Column(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(16.dp)
+                        .padding(8.dp)
                 ) {
-                    Text("Expanded Platform Dashboard", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-                    Text("Triple visual groupings utilize maximum landscape width.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    Spacer(modifier = Modifier.height(12.dp))
+                    Text(
+                        text = "Expanded Platform Dashboard",
+                        style = MaterialTheme.typography.titleSmall,
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 1,
+                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                    )
+                    Text(
+                        text = "Adaptive grids utilize maximum width.",
+                        style = MaterialTheme.typography.bodySmall,
+                        fontSize = 8.sp,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1,
+                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
 
                     LazyVerticalGrid(
-                        columns = GridCells.Fixed(3),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        columns = GridCells.Fixed(2),
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        verticalArrangement = Arrangement.spacedBy(6.dp),
                         modifier = Modifier.fillMaxSize()
                     ) {
                         items(6) { idx ->
                             Card(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .height(100.dp)
+                                    .height(75.dp),
+                                shape = RoundedCornerShape(12.dp)
                             ) {
-                                Column(modifier = Modifier.padding(12.dp), verticalArrangement = Arrangement.SpaceBetween) {
-                                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                                        Icon(Icons.Default.BarChart, null, modifier = Modifier.size(14.dp), tint = MaterialTheme.colorScheme.secondary)
-                                        Text("Graph #$idx", fontWeight = FontWeight.Bold, fontSize = 11.sp)
+                                Column(
+                                    modifier = Modifier.padding(8.dp),
+                                    verticalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                                    ) {
+                                        Icon(Icons.Default.BarChart, null, modifier = Modifier.size(12.dp), tint = MaterialTheme.colorScheme.secondary)
+                                        Text(
+                                            text = "Graph #$idx",
+                                            fontWeight = FontWeight.Bold,
+                                            fontSize = 9.sp,
+                                            maxLines = 1,
+                                            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                                        )
                                     }
-                                    Text("Grid Card Data item metrics.", fontSize = 10.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                    Text(
+                                        text = "Metric data data",
+                                        fontSize = 8.sp,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        maxLines = 1,
+                                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                                    )
                                 }
                             }
                         }

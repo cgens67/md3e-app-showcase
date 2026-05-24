@@ -146,7 +146,7 @@ fun ComponentsShowcase(modifier: Modifier = Modifier) {
                         },
                         colors = ButtonDefaults.buttonColors(
                             containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                            contentColor = Color.White
+                            contentColor = MaterialTheme.colorScheme.primaryContainer
                         ),
                         contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
                         shape = RoundedCornerShape(50)
