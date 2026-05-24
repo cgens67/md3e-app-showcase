@@ -22,26 +22,16 @@ android {
 
   signingConfigs {
     create("release") {
-      val keystorePath = System.getenv("KEYSTORE_PATH") ?: "${rootDir}/my-upload-key.jks"
-      val keystoreFile = file(keystorePath)
-      if (keystoreFile.exists() && System.getenv("STORE_PASSWORD") != null) {
-        storeFile = keystoreFile
-        storePassword = System.getenv("STORE_PASSWORD")
-        keyAlias = System.getenv("KEY_ALIAS") ?: "upload"
-        keyPassword = System.getenv("KEY_PASSWORD")
-      } else {
-        // Fallback to debug signature so that GitHub Actions / CI builds succeed ready-to-test
-        storeFile = file("${rootDir}/debug.keystore")
-        storePassword = "android"
-        keyAlias = "androiddebugkey"
-        keyPassword = "android"
+      val keystorePath = System.getenv("KEYSTORE_PATH") ?: ""
+      if (keystorePath.isNotEmpty()) {
+        val keystoreFile = file(keystorePath)
+        if (keystoreFile.exists() && System.getenv("STORE_PASSWORD") != null) {
+          storeFile = keystoreFile
+          storePassword = System.getenv("STORE_PASSWORD")
+          keyAlias = System.getenv("KEY_ALIAS") ?: "upload"
+          keyPassword = System.getenv("KEY_PASSWORD")
+        }
       }
-    }
-    create("debugConfig") {
-      storeFile = file("${rootDir}/debug.keystore")
-      storePassword = "android"
-      keyAlias = "androiddebugkey"
-      keyPassword = "android"
     }
   }
 
@@ -50,10 +40,19 @@ android {
       isCrunchPngs = false
       isMinifyEnabled = false
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-      signingConfig = signingConfigs.getByName("release")
+      
+      // Use real production release configuration if the key environment variables exist,
+      // otherwise fall back automatically to the standard built-in debug signature
+      val keystorePath = System.getenv("KEYSTORE_PATH")
+      val hasReleaseKeys = keystorePath != null && file(keystorePath).exists() && System.getenv("STORE_PASSWORD") != null
+      if (hasReleaseKeys) {
+        signingConfig = signingConfigs.getByName("release")
+      } else {
+        signingConfig = signingConfigs.getByName("debug")
+      }
     }
     debug {
-      signingConfig = signingConfigs.getByName("debugConfig")
+      signingConfig = signingConfigs.getByName("debug")
     }
   }
   compileOptions {
