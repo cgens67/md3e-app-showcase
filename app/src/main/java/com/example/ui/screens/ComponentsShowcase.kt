@@ -89,81 +89,6 @@ fun ComponentsShowcase(modifier: Modifier = Modifier) {
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
-        // Featured Adaptive Carousel Banner precisely matching Geometric Balance HTML spec
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer
-            ),
-            shape = RoundedCornerShape(28.dp)
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(180.dp)
-            ) {
-                // Background decorative ambient abstract shape
-                Box(
-                    modifier = Modifier
-                        .size(130.dp)
-                        .align(Alignment.BottomEnd)
-                        .offset(x = 10.dp, y = 20.dp)
-                        .background(
-                            color = Color(0xFFD0BCFF).copy(alpha = 0.5f),
-                            shape = CircleShape
-                        )
-                )
-
-                // Content Column
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(24.dp),
-                    verticalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Column {
-                        Text(
-                            text = "FEATURED",
-                            style = MaterialTheme.typography.labelSmall,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f),
-                            letterSpacing = 1.sp
-                        )
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Text(
-                            text = "Adaptive\nCarousel",
-                            style = MaterialTheme.typography.titleLarge,
-                            fontSize = 28.sp,
-                            lineHeight = 32.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer
-                        )
-                    }
-
-                     Button(
-                        onClick = {
-                            selectedCategory = "Containers & Visuals"
-                        },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                            contentColor = MaterialTheme.colorScheme.primaryContainer
-                        ),
-                        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
-                        shape = RoundedCornerShape(50)
-                    ) {
-                        Text(
-                            text = "View Docs",
-                            color = MaterialTheme.colorScheme.primaryContainer,
-                            style = MaterialTheme.typography.labelLarge,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                }
-            }
-        }
-
         // Horizontal scrolling category bar
         LazyRow(
             modifier = Modifier
@@ -213,6 +138,82 @@ fun ComponentsShowcase(modifier: Modifier = Modifier) {
             contentPadding = PaddingValues(top = 8.dp, bottom = 48.dp, start = 16.dp, end = 16.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
+            item {
+                // Featured Adaptive Carousel Banner precisely matching Geometric Balance HTML spec (now inside list to prevent obstructing sightlines!)
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 8.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer
+                    ),
+                    shape = RoundedCornerShape(28.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(180.dp)
+                    ) {
+                        // Background decorative ambient abstract shape
+                        Box(
+                            modifier = Modifier
+                                .size(130.dp)
+                                .align(Alignment.BottomEnd)
+                                .offset(x = 10.dp, y = 20.dp)
+                                .background(
+                                    color = Color(0xFFD0BCFF).copy(alpha = 0.5f),
+                                    shape = CircleShape
+                                )
+                        )
+
+                        // Content Column
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(24.dp),
+                            verticalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column {
+                                Text(
+                                    text = "FEATURED",
+                                    style = MaterialTheme.typography.labelSmall,
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f),
+                                    letterSpacing = 1.sp
+                                )
+                                Spacer(modifier = Modifier.height(4.dp))
+                                Text(
+                                    text = "Adaptive\nCarousel",
+                                    style = MaterialTheme.typography.titleLarge,
+                                    fontSize = 28.sp,
+                                    lineHeight = 32.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                                )
+                            }
+
+                             Button(
+                                onClick = {
+                                    selectedCategory = "Containers & Visuals"
+                                },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                                    contentColor = MaterialTheme.colorScheme.primaryContainer
+                                ),
+                                contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
+                                shape = RoundedCornerShape(50)
+                            ) {
+                                Text(
+                                    text = "View Docs",
+                                    color = MaterialTheme.colorScheme.primaryContainer,
+                                    style = MaterialTheme.typography.labelLarge,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                        }
+                    }
+                }
+            }
             items(filteredComponents) { doc ->
                 OutlinedCard(
                     modifier = Modifier
@@ -1329,8 +1330,8 @@ fun RenderInteractiveDemo(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     
-                    HorizontalMultiBrowseCarousel(
-                        state = rememberCarouselState { slides.size },
+                    ShowcaseCarousel(
+                        itemsCount = slides.size,
                         preferredItemWidth = 175.dp, // Sized perfectly so the trailing card is clipped!
                         itemSpacing = 12.dp,
                         modifier = Modifier
@@ -1423,8 +1424,8 @@ fun RenderInteractiveDemo(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
 
-                    HorizontalMultiBrowseCarousel(
-                        state = rememberCarouselState { slides.size },
+                    ShowcaseCarousel(
+                        itemsCount = slides.size,
                         preferredItemWidth = 310.dp, // Wide card layout, unclipped
                         itemSpacing = 12.dp,
                         modifier = Modifier
@@ -1540,10 +1541,9 @@ fun AppBarRow(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HorizontalMultiBrowseCarousel(
-    state: CarouselState,
+fun ShowcaseCarousel(
+    itemsCount: Int,
     preferredItemWidth: androidx.compose.ui.unit.Dp,
     itemSpacing: androidx.compose.ui.unit.Dp,
     modifier: Modifier = Modifier,
@@ -1554,7 +1554,7 @@ fun HorizontalMultiBrowseCarousel(
         horizontalArrangement = Arrangement.spacedBy(itemSpacing),
         contentPadding = PaddingValues(horizontal = 24.dp)
     ) {
-        items(state.itemsCount) { index ->
+        items(itemsCount) { index ->
             Box(
                 modifier = Modifier
                     .width(preferredItemWidth)
@@ -1564,12 +1564,4 @@ fun HorizontalMultiBrowseCarousel(
             }
         }
     }
-}
-
-class CarouselState(val itemsCount: Int)
-
-@Composable
-fun rememberCarouselState(itemsCount: () -> Int): CarouselState {
-    val count = remember { itemsCount() }
-    return remember { CarouselState(count) }
 }
