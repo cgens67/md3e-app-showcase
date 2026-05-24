@@ -20,10 +20,6 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
-import androidx.compose.material3.carousel.HorizontalMultiBrowseCarousel
-import androidx.compose.material3.carousel.HorizontalUncontainedCarousel
-import androidx.compose.material3.carousel.rememberCarouselState
-import androidx.compose.material3.carousel.CarouselState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,6 +40,8 @@ import androidx.compose.ui.unit.sp
 import com.example.data.ComponentDoc
 import com.example.data.ComponentRegistry
 import com.example.data.ParameterItem
+import androidx.compose.ui.layout.ContentScale
+import coil.compose.AsyncImage
 import kotlinx.coroutines.launch
 import kotlin.math.PI
 import kotlin.math.cos
@@ -91,6 +89,81 @@ fun ComponentsShowcase(modifier: Modifier = Modifier) {
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
+        // Featured Adaptive Carousel Banner precisely matching Geometric Balance HTML spec
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer
+            ),
+            shape = RoundedCornerShape(28.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(180.dp)
+            ) {
+                // Background decorative ambient abstract shape
+                Box(
+                    modifier = Modifier
+                        .size(130.dp)
+                        .align(Alignment.BottomEnd)
+                        .offset(x = 10.dp, y = 20.dp)
+                        .background(
+                            color = Color(0xFFD0BCFF).copy(alpha = 0.5f),
+                            shape = CircleShape
+                        )
+                )
+
+                // Content Column
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(24.dp),
+                    verticalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column {
+                        Text(
+                            text = "FEATURED",
+                            style = MaterialTheme.typography.labelSmall,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f),
+                            letterSpacing = 1.sp
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Text(
+                            text = "Adaptive\nCarousel",
+                            style = MaterialTheme.typography.titleLarge,
+                            fontSize = 28.sp,
+                            lineHeight = 32.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer
+                        )
+                    }
+
+                     Button(
+                        onClick = {
+                            selectedCategory = "Containers & Visuals"
+                        },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                            contentColor = MaterialTheme.colorScheme.primaryContainer
+                        ),
+                        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
+                        shape = RoundedCornerShape(50)
+                    ) {
+                        Text(
+                            text = "View Docs",
+                            color = MaterialTheme.colorScheme.primaryContainer,
+                            style = MaterialTheme.typography.labelLarge,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
+            }
+        }
+
         // Horizontal scrolling category bar
         LazyRow(
             modifier = Modifier
@@ -140,83 +213,6 @@ fun ComponentsShowcase(modifier: Modifier = Modifier) {
             contentPadding = PaddingValues(top = 8.dp, bottom = 48.dp, start = 16.dp, end = 16.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
-            item {
-                // Featured Adaptive Carousel Banner precisely matching Geometric Balance HTML spec
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 8.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer
-                    ),
-                    shape = RoundedCornerShape(28.dp)
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(180.dp)
-                    ) {
-                        // Background decorative ambient abstract shape
-                        Box(
-                            modifier = Modifier
-                                .size(130.dp)
-                                .align(Alignment.BottomEnd)
-                                .offset(x = 10.dp, y = 20.dp)
-                                .background(
-                                    color = Color(0xFFD0BCFF).copy(alpha = 0.5f),
-                                    shape = CircleShape
-                                )
-                        )
-
-                        // Content Column
-                        Column(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(24.dp),
-                            verticalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Column {
-                                Text(
-                                    text = "FEATURED",
-                                    style = MaterialTheme.typography.labelSmall,
-                                    fontWeight = FontWeight.Bold,
-                                    color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f),
-                                    letterSpacing = 1.sp
-                                )
-                                Spacer(modifier = Modifier.height(4.dp))
-                                Text(
-                                    text = "Adaptive\nCarousel",
-                                    style = MaterialTheme.typography.titleLarge,
-                                    fontSize = 28.sp,
-                                    lineHeight = 32.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    color = MaterialTheme.colorScheme.onPrimaryContainer
-                                )
-                            }
-
-                             Button(
-                                onClick = {
-                                    selectedCategory = "Containers & Visuals"
-                                },
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                                    contentColor = MaterialTheme.colorScheme.primaryContainer
-                                ),
-                                contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
-                                shape = RoundedCornerShape(50)
-                            ) {
-                                Text(
-                                    text = "View Docs",
-                                    color = MaterialTheme.colorScheme.primaryContainer,
-                                    style = MaterialTheme.typography.labelLarge,
-                                    fontWeight = FontWeight.Bold
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-
             items(filteredComponents) { doc ->
                 OutlinedCard(
                     modifier = Modifier
@@ -1293,19 +1289,22 @@ fun RenderInteractiveDemo(
 
         "Carousel" -> {
             val slides = listOf(
-                Triple("Creative Idea Flow", "Launch innovative project designs with wavy templates.", MaterialTheme.colorScheme.primaryContainer),
-                Triple("Spring Velocity Animation", "Build super-responsive components using spring curves.", MaterialTheme.colorScheme.secondaryContainer),
-                Triple("Responsive Layout Grid", "Ensure precise visual scales from compact to tablets.", MaterialTheme.colorScheme.tertiaryContainer),
-                Triple("Adaptive Space Map", "Seamlessly reflow charts and lists dynamically.", MaterialTheme.colorScheme.primaryContainer),
-                Triple("Precision Timing Matrix", "Measure fluid states in microscopic latency frames.", MaterialTheme.colorScheme.secondaryContainer)
+                Triple("Pod wiatr", "W.E.N.A. & Quiz", "https://images.unsplash.com/photo-1516280440614-37939bbacd6a?w=500&auto=format&fit=crop&q=80"),
+                Triple("Dil Lagana Mana Tha", "Krish Mondal, De...", "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=500&auto=format&fit=crop&q=80"),
+                Triple("Cruel Summer", "Taylor Swift", "https://images.unsplash.com/photo-1524250502761-136f2f3f34f5?w=500&auto=format&fit=crop&q=80"),
+                Triple("SOS (Night Bass Remix)", "FIFTY FIFTY", "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500&auto=format&fit=crop&q=80"),
+                Triple("打工仔", "Steady Gang", "https://images.unsplash.com/photo-1549417229-aa67d3263c09?w=500&auto=format&fit=crop&q=80"),
+                Triple("YALA (Ultra Slowed)", "QMIIR, Irokz, DJ Zarek", "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=500&auto=format&fit=crop&q=80"),
+                Triple("You Rock My World", "Michael Jackson", "https://images.unsplash.com/photo-1487180142328-054b783fc471?w=500&auto=format&fit=crop&q=80"),
+                Triple("Chicago", "Michael Jackson", "https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=500&auto=format&fit=crop&q=80")
             )
 
             Column(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
                 // Style 1: Multi-Browse Carousel (Clipped)
-                Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(6.dp)
@@ -1319,42 +1318,78 @@ fun RenderInteractiveDemo(
                         }
                         Text(
                             text = "Multi-Browse Carousel",
-                            style = MaterialTheme.typography.titleSmall,
+                            style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.primary
                         )
                     }
                     Text(
-                        text = "The last item in the view is dynamically clipped/shrunk at the container edge to establish optimal scroll affordance.",
+                        text = "The last item in the view is partially clipped at the container edge to establish scroll affordance.",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     
-                    val multiBrowseState = rememberCarouselState { slides.size }
                     HorizontalMultiBrowseCarousel(
-                        state = multiBrowseState,
-                        preferredItemWidth = 186.dp,
-                        itemSpacing = 8.dp,
+                        state = rememberCarouselState { slides.size },
+                        preferredItemWidth = 175.dp, // Sized perfectly so the trailing card is clipped!
+                        itemSpacing = 12.dp,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(180.dp)
+                            .height(210.dp)
                     ) { index ->
                         val slide = slides[index]
                         Box(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .clip(RoundedCornerShape(16.dp))
-                                .background(slide.third)
-                                .border(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f), RoundedCornerShape(16.dp))
-                                .padding(12.dp)
+                                .clip(RoundedCornerShape(24.dp))
+                                .border(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.25f), RoundedCornerShape(24.dp))
                         ) {
-                            Column(verticalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxSize()) {
-                                Icon(Icons.Default.Star, null, modifier = Modifier.size(18.dp), tint = MaterialTheme.colorScheme.primary)
-                                Column {
-                                    Text(slide.first, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.labelLarge, maxLines = 1, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis)
-                                    Spacer(modifier = Modifier.height(2.dp))
-                                    Text(slide.second, style = MaterialTheme.typography.bodySmall, fontSize = 10.sp, maxLines = 2, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis)
-                                }
+                            // Immersive Background Album Cover
+                            AsyncImage(
+                                model = slide.third,
+                                contentDescription = slide.first,
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier.fillMaxSize()
+                            )
+                            
+                            // High-contrast smooth gradient scrim
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(
+                                        Brush.verticalGradient(
+                                            colors = listOf(
+                                                Color.Transparent,
+                                                Color.Black.copy(alpha = 0.3f),
+                                                Color.Black.copy(alpha = 0.85f)
+                                            )
+                                        )
+                                    )
+                            )
+
+                            // Track Info aligned to the bottom-left precisely matching the screenshot
+                            Column(
+                                modifier = Modifier
+                                    .align(Alignment.BottomStart)
+                                    .padding(horizontal = 14.dp, vertical = 12.dp)
+                            ) {
+                                Text(
+                                    text = slide.first,
+                                    color = Color.White,
+                                    fontWeight = FontWeight.Bold,
+                                    style = MaterialTheme.typography.titleSmall,
+                                    maxLines = 1,
+                                    overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                                )
+                                Spacer(modifier = Modifier.height(2.dp))
+                                Text(
+                                    text = slide.second,
+                                    color = Color.White.copy(alpha = 0.7f),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    fontWeight = FontWeight.Medium,
+                                    maxLines = 1,
+                                    overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                                )
                             }
                         }
                     }
@@ -1363,7 +1398,7 @@ fun RenderInteractiveDemo(
                 HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f), thickness = 1.dp)
 
                 // Style 2: Uncontained Carousel (Unclipped)
-                Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(6.dp)
@@ -1377,42 +1412,78 @@ fun RenderInteractiveDemo(
                         }
                         Text(
                             text = "Uncontained Carousel",
-                            style = MaterialTheme.typography.titleSmall,
+                            style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.primary
                         )
                     }
                     Text(
-                        text = "Shows the active items fully size-aligned. The last item is not clipped when resting, creating a clean aligned layout.",
+                        text = "Shows the active item fully size-aligned. The last item is not clipped when resting, creating a clean rectangular look.",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
 
-                    val uncontainedState = rememberCarouselState { slides.size }
-                    HorizontalUncontainedCarousel(
-                        state = uncontainedState,
-                        itemWidth = 265.dp,
-                        itemSpacing = 8.dp,
+                    HorizontalMultiBrowseCarousel(
+                        state = rememberCarouselState { slides.size },
+                        preferredItemWidth = 310.dp, // Wide card layout, unclipped
+                        itemSpacing = 12.dp,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(180.dp)
+                            .height(210.dp)
                     ) { index ->
                         val slide = slides[index]
                         Box(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .clip(RoundedCornerShape(16.dp))
-                                .background(slide.third)
-                                .border(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f), RoundedCornerShape(16.dp))
-                                .padding(12.dp)
+                                .clip(RoundedCornerShape(24.dp))
+                                .border(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.25f), RoundedCornerShape(24.dp))
                         ) {
-                            Column(verticalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxSize()) {
-                                Icon(Icons.Default.Favorite, null, modifier = Modifier.size(18.dp), tint = MaterialTheme.colorScheme.secondary)
-                                Column {
-                                    Text(slide.first, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.labelLarge, maxLines = 1, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis)
-                                    Spacer(modifier = Modifier.height(2.dp))
-                                    Text(slide.second, style = MaterialTheme.typography.bodySmall, fontSize = 10.sp, maxLines = 2, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis)
-                                }
+                            // Immersive Background Album Cover
+                            AsyncImage(
+                                model = slide.third,
+                                contentDescription = slide.first,
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier.fillMaxSize()
+                            )
+                            
+                            // High-contrast smooth gradient scrim
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(
+                                        Brush.verticalGradient(
+                                            colors = listOf(
+                                                Color.Transparent,
+                                                Color.Black.copy(alpha = 0.3f),
+                                                Color.Black.copy(alpha = 0.85f)
+                                            )
+                                        )
+                                    )
+                            )
+
+                            // Track Info aligned to bottom start
+                            Column(
+                                modifier = Modifier
+                                    .align(Alignment.BottomStart)
+                                    .padding(horizontal = 16.dp, vertical = 14.dp)
+                            ) {
+                                Text(
+                                    text = slide.first,
+                                    color = Color.White,
+                                    fontWeight = FontWeight.Bold,
+                                    style = MaterialTheme.typography.titleMedium,
+                                    maxLines = 1,
+                                    overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                                )
+                                Spacer(modifier = Modifier.height(2.dp))
+                                Text(
+                                    text = slide.second,
+                                    color = Color.White.copy(alpha = 0.72f),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = FontWeight.Medium,
+                                    maxLines = 1,
+                                    overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                                )
                             }
                         }
                     }
@@ -1467,4 +1538,38 @@ fun AppBarRow(
             content = actions
         )
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HorizontalMultiBrowseCarousel(
+    state: CarouselState,
+    preferredItemWidth: androidx.compose.ui.unit.Dp,
+    itemSpacing: androidx.compose.ui.unit.Dp,
+    modifier: Modifier = Modifier,
+    content: @Composable (Int) -> Unit
+) {
+    LazyRow(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(itemSpacing),
+        contentPadding = PaddingValues(horizontal = 24.dp)
+    ) {
+        items(state.itemsCount) { index ->
+            Box(
+                modifier = Modifier
+                    .width(preferredItemWidth)
+                    .fillMaxHeight()
+            ) {
+                content(index)
+            }
+        }
+    }
+}
+
+class CarouselState(val itemsCount: Int)
+
+@Composable
+fun rememberCarouselState(itemsCount: () -> Int): CarouselState {
+    val count = remember { itemsCount() }
+    return remember { CarouselState(count) }
 }
